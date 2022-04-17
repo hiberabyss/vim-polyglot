@@ -2506,17 +2506,19 @@ endif
 " Function called for testing all functions defined here.  These are
 " script-local, thus need to be executed here.
 " Returns a string with error messages (hopefully empty).
-func! TestFiletypeFuncs(testlist)
-  let output = ''
-  for f in a:testlist
-    try
-      exe f
-    catch
-      let output = output . "\n" . f . ": " . v:exception
-    endtry
-  endfor
-  return output
-endfunc
+if !exists("*TestFiletypeFuncs")
+  func! TestFiletypeFuncs(testlist)
+    let output = ''
+    for f in a:testlist
+      try
+        exe f
+      catch
+        let output = output . "\n" . f . ": " . v:exception
+      endtry
+    endfor
+    return output
+  endfunc
+endif
 
 " Restore 'cpoptions'
 let &cpo = s:cpo_save
